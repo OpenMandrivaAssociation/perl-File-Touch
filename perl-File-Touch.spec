@@ -13,6 +13,7 @@ Url:            http://search.cpan.org/dist/%{module}
 Source:         http://www.cpan.org/modules/by-module/File/%{module}-%{version}.tar.bz2
 Buildrequires:	perl-devel
 Buildarch:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 This modules update access and modification timestamps, creating nonexistent
