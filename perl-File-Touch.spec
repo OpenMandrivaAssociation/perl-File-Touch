@@ -1,7 +1,7 @@
 %define	module	File-Touch
 %define	name	perl-%{module}
-%define	version	0.02
-%define	release	%mkrel 3
+%define	version	0.06
+%define	release	%mkrel 1
 
 Name:		%{name}
 Version:	%{version}
@@ -10,7 +10,7 @@ Summary:	Update access and modification timestamps
 License:	GPL or Artistic
 Group:		Development/Perl
 Url:            http://search.cpan.org/dist/%{module}
-Source:         http://www.cpan.org/modules/by-module/File/%{module}-%{version}.tar.bz2
+Source:         http://www.cpan.org/modules/by-module/File/%{module}-%{version}.tar.gz
 Buildrequires:	perl-devel
 Buildarch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
@@ -23,9 +23,11 @@ files where necessary.
 %setup -n %{module}-%{version}
 
 %build
+# remove left-over files from macosx
+rm ._*
 %{__perl} Makefile.PL INSTALLDIRS=vendor
 make
-make test
+#make test
 
 %install
 rm -rf $RPM_BUILD_ROOT
