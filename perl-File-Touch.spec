@@ -1,16 +1,14 @@
-%define	module	File-Touch
-%define	name	perl-%{module}
-%define	version	0.06
-%define	release	%mkrel 1
+%define upstream_name       File-Touch
+%define upstream_version    0.06
 
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 1
 Summary:	Update access and modification timestamps
 License:	GPL or Artistic
 Group:		Development/Perl
-Url:            http://search.cpan.org/dist/%{module}
-Source:         http://www.cpan.org/modules/by-module/File/%{module}-%{version}.tar.gz
+Url:        http://search.cpan.org/dist/%{upstream_name}
+Source:     http://www.cpan.org/modules/by-module/File/%{upstream_name}-%{upstream_version}.tar.gz
 Buildrequires:	perl-devel
 Buildarch:	noarch
 BuildRoot:	%{_tmppath}/%{name}-%{version}
@@ -20,27 +18,28 @@ This modules update access and modification timestamps, creating nonexistent
 files where necessary.
 
 %prep
-%setup -n %{module}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version} 
 
 %build
 # remove left-over files from macosx
 rm ._*
 %{__perl} Makefile.PL INSTALLDIRS=vendor
-make
+%make
+
+%check
 #make test
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 %clean 
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files 
 %defattr(-,root,root)
 %doc MANIFEST Changes
-%dir %{perl_vendorlib}/File
-%{perl_vendorlib}/File/*
+%{perl_vendorlib}/File
 %{_mandir}/*/*
 
 
